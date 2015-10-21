@@ -19,7 +19,7 @@ public class WebAppConfig {
     public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         // указываем где будут лежать наши веб-страницы
-        resolver.setPrefix("/pages/");
+        resolver.setPrefix("/WEB-INF/pages/");
         // формат View который мы будем использовать
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
