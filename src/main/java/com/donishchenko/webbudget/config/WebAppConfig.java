@@ -1,9 +1,14 @@
 package com.donishchenko.webbudget.config;
 
+import com.donishchenko.webbudget.services.UserDetailsServiceImpl;
+import com.donishchenko.webbudget.services.UserService;
+import com.donishchenko.webbudget.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -13,7 +18,12 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @EnableWebMvc
 // Указываем где искать контроллеры и остальные компоненты
 @ComponentScan("com.donishchenko.webbudget")
-public class WebAppConfig {
+public class WebAppConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
 
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
@@ -25,5 +35,15 @@ public class WebAppConfig {
         resolver.setViewClass(JstlView.class);
 
         return resolver;
+    }
+
+    @Bean
+    public UserDetailsServiceImpl getUserDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public UserService getUserService() {
+        return new UserServiceImpl();
     }
 }
